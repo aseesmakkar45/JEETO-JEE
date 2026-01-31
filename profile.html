@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | JEETO JEE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-page-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 40px;
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-avatar-container {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 25px;
+            position: relative;
+            border-radius: 50%;
+        }
+
+        .profile-default {
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #aaa;
+            overflow: hidden;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .camera-btn {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s, background 0.2s;
+            z-index: 10;
+        }
+
+        .camera-btn:hover {
+            transform: scale(1.1);
+            background: #fff;
+        }
+
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        .profile-email {
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .info-group {
+            text-align: left;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .info-label {
+            color: #888;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #fff;
+            font-size: 1.1rem;
+            font-family: monospace;
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+    <div class="space-background">
+        <div class="stars"></div>
+        <div class="planet-1"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="container nav-container" style="justify-content: space-between;">
+            <a href="/" class="logo">JEEतो JEE</a>
+            <a href="/" class="btn btn-outline"
+                style="padding: 6px 16px; font-size: 0.9rem; border-color: rgba(255,255,255,0.3); color: #fff;">Return
+                Home</a>
+        </div>
+    </header>
+
+    <div class="profile-page-wrapper">
+        <div class="profile-card">
+
+            <!-- Simplified Avatar: Just the initial -->
+            <div class="profile-avatar-container">
+                <div class="profile-default"
+                    style="color: #fff; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);">
+                    {{ user_initial }}
+                </div>
+            </div>
+
+            <h1 class="profile-name">{{ user.name }}</h1>
+            <p class="profile-email">Member since 2026</p>
+
+            <div class="info-group">
+                <div class="info-label">Email Address</div>
+                <div class="info-value">{{ user.email }}</div>
+            </div>
+
+            <div class="info-group">
+                <div class="info-label">Phone Number</div>
+                <div class="info-value">{{ user.phone }}</div>
+            </div>
+
+            <a href="/my-plan" class="btn btn-primary" style="width: 100%; margin-top: 20px;">View My Plan</a>
+        </div>
+    </div>
+</body>
+
+</html>

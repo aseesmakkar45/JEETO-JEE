@@ -1,0 +1,75 @@
+
+/* -----------------------------------------------------------------------------
+   Profile & Updated Auth Styles
+----------------------------------------------------------------------------- */
+
+/* Navbar Profile */
+.profile-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 20px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.profile-container:hover {
+    opacity: 0.8;
+}
+
+.profile-icon {
+    font-size: 2.2rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.profile-text {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+/* Auth Modal - View Switching */
+.auth-view {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.auth-view.active {
+    display: block;
+}
+
+/* Form Styles */
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.auth-footer {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.auth-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.mt-3 { margin-top: 16px; }
+
+/* Mobile Menu Adjustment */
+@media (max-width: 768px) {
+    .profile-container {
+        /* Hide in navbar on mobile if space is tight, 
+           or adjust position. For now, keep it unless it breaks layout */
+        margin-left: 10px;
+    }
+    
+    .profile-text {
+        display: none; /* Icon only on mobile */
+    }
+}

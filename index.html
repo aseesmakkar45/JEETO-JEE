@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEETO JEE | Premium JEE Mentorship</title>
+    <meta name="description"
+        content="Personalised mentorship from 99+ percentile mentors to help you achieve your dream JEE score. Join Ashir Chugh & Asees Jot Singh.">
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" defer></script>
+    <!-- Three.js (Deferred for performance) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+</head>
+
+<body class="dark-mode">
+
+    <!-- Space Background Elements -->
+    <div class="space-background">
+        <div class="stars"></div>
+        <!-- Twinkling removed -->
+
+        <div class="planet-1"></div>
+        <div class="planet-2"></div>
+        <div class="ufo-container">
+            <div class="ufo">
+                <div class="ufo-body"></div>
+                <div class="ufo-dome"></div>
+                <div class="ufo-lights"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container nav-container">
+
+
+            <a href="#" class="logo">JEEतो JEE</a>
+            <nav class="nav-links">
+                <a href="#mentors">Mentors</a>
+                <a href="#results">Results</a>
+                <a href="#features">Features</a>
+                <a href="#faq">FAQ</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#pricing" class="btn btn-primary sm-btn">Join Now</a>
+
+                <!-- Profile Trigger -->
+                <div class="profile-container" id="profile-trigger">
+                    <div class="profile-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24" height="24"
+                            fill="currentColor">
+                            <path
+                                d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm-2 96a56 56 0 11-56 56 56 56 0 0156-56zm0 191.29c-55 0-102.29-25.5-129.4-66.52 3.3-36.21 27.31-63.78 63.6-63.78 19.82 0 38.09 7.76 52 20.3 14-12.63 32.53-20.3 52-20.3 36.09 0 60.52 27.69 63.8 64-27.42 41.21-74.83 66.3-130 66.3z" />
+                        </svg>
+                    </div>
+                    <span class="profile-text">
+                        {% if current_user.is_authenticated %}
+                        {{ current_user.name.split()[0] }}
+                        {% else %}
+                        Guest
+                        {% endif %}
+                    </span>
+
+                    <!-- Profile Dropdown -->
+                    <div class="profile-dropdown" id="profile-dropdown">
+                        <a href="/profile" class="dropdown-item">
+                            <ion-icon name="person-outline"></ion-icon> My Profile
+                        </a>
+                        <a href="/my-plan" class="dropdown-item">
+                            <ion-icon name="star-outline"></ion-icon> My Plan
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item text-danger" id="action-sign-out">
+                            <ion-icon name="log-out-outline"></ion-icon> Sign Out
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="mobile-menu-btn">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-background-glow"></div>
+        <div class="container hero-content text-center">
+            <h1 class="hero-title fade-in-up">
+                JEEतो JEE <br>
+                <span class="highlight">Mentorship Program</span>
+            </h1>
+            <p class="hero-subtitle fade-in-up delay-100">
+                Personalised mentorship from <span class="text-white">99.5+ percentile mentors</span> to help you
+                achieve
+                your dream JEE score.
+            </p>
+            <div class="hero-mentors fade-in-up delay-200">
+                <div class="mentor-badge">
+                    <span class="mentor-name">Ashir Chugh</span>
+                    <span class="mentor-percentile">99.55 %ile</span>
+                </div>
+                <div class="mentor-divider">|</div>
+                <div class="mentor-badge">
+                    <span class="mentor-name">Asees Jot Singh</span>
+                    <span class="mentor-percentile">99.71 %ile</span>
+                </div>
+            </div>
+            <div class="hero-cta fade-in-up delay-300">
+                <a href="#pricing" class="btn btn-primary btn-lg">Join Now</a>
+                <a href="#features" class="btn btn-outline btn-lg">Know More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet Your Mentors -->
+    <section id="mentors" class="section mentors-section">
+        <div class="container">
+            <h2 class="section-title text-center fade-in-on-scroll">Meet Your Mentors</h2>
+            <div class="mentors-grid stagger-children">
+                <!-- Mentor 1 -->
+                <div class="mentor-card fade-in-on-scroll">
+                    <img src="mentor_ashir.png" alt="Ashir Chugh" class="mentor-img">
+                    <div class="mentor-info">
+                        <h3>Ashir Chugh</h3>
+                        <div class="percentile-tag">99.55 %ile</div>
+                        <p class="mentor-bio">
+                            Known for his strategic approach to problem-solving. Ashir focuses on simplifying complex
+                            concepts and building a rock-solid exam temperament.
+                        </p>
+                    </div>
+                </div>
+                <!-- Mentor 2 -->
+                <div class="mentor-card fade-in-on-scroll">
+                    <img src="mentor_asees.png" alt="Asees Jot Singh" class="mentor-img">
+                    <div class="mentor-info">
+                        <h3>Asees Jot Singh</h3>
+                        <div class="percentile-tag">99.71 %ile</div>
+                        <p class="mentor-bio">
+                            A master of consistency and discipline. Asees helps students optimize their daily schedules
+                            and prioritize the right topics for maximum score boosts.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Results -->
+    <section id="results" class="section results-section">
+        <div class="container">
+            <h2 class="section-title text-center fade-in-on-scroll">Student Results</h2>
+            <p class="section-subtitle text-center fade-in-on-scroll">Real improvements. Real stories.</p>
+
+            <div class="results-grid stagger-children">
+                <div class="result-card fade-in-on-scroll">
+                    <div class="score-jump">
+                        <span class="old-score">85</span>
+                        <ion-icon name="arrow-forward-outline"></ion-icon>
+                        <span class="new-score">140+</span>
+                    </div>
+                    <p class="result-feedback">"A simplified revision strategy,sure shot topics and a personalized test
+                        planner transformed my score."</p>
+                </div>
+                <div class="result-card fade-in-on-scroll">
+                    <div class="score-jump">
+                        <span class="old-score">120</span>
+                        <ion-icon name="arrow-forward-outline"></ion-icon>
+                        <span class="new-score">160+</span>
+                    </div>
+                    <p class="result-feedback">"Some useful tips from the live sessions taught me the skill of mistake
+                        minimization which was a game-changer."</p>
+                </div>
+                <div class="result-card fade-in-on-scroll">
+                    <div class="score-jump">
+                        <span class="old-score">170</span>
+                        <ion-icon name="arrow-forward-outline"></ion-icon>
+                        <span class="new-score">220+</span>
+                    </div>
+                    <p class="result-feedback">"Chemistry was never my strong suit, but the self tested resources,daily
+                        track of target completion helped me improve my score."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What You Get -->
+    <section id="features" class="section features-section">
+        <div class="container">
+            <h2 class="section-title text-center fade-in-on-scroll">What You Get in JEETO JEE</h2>
+            <div class="features-grid stagger-children">
+                <div class="feature-item fade-in-on-scroll">
+                    <ion-icon name="people-outline"></ion-icon>
+                    <span>One-to-one guidance</span>
+                </div>
+                <div class="feature-item fade-in-on-scroll">
+                    <ion-icon name="videocam-outline"></ion-icon>
+                    <span>Live sessions</span>
+                </div>
+                <div class="feature-item fade-in-on-scroll">
+                    <ion-icon name="logo-whatsapp"></ion-icon>
+                    <span>Daily Query Resolution </span>
+                </div>
+                <div class="feature-item fade-in-on-scroll">
+                    <ion-icon name="library-outline"></ion-icon>
+                    <span>Extremely useful resources</span>
+                </div>
+                <div class="feature-item fade-in-on-scroll">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                    <span>Formula sheets & Notes</span>
+                </div>
+                <div class="feature-item fade-in-on-scroll">
+                    <ion-icon name="analytics-outline"></ion-icon>
+                    <span>Mock-test strategies</span>
+                </div>
+                <div class="feature-item fade-in-on-scroll">
+                    <ion-icon name="calendar-outline"></ion-icon>
+                    <span>Best daily study schedule</span>
+                </div>
+                <div class="feature-item fade-in-on-scroll">
+                    <ion-icon name="list-outline"></ion-icon>
+                    <span>Chapter-wise prioritisation</span>
+                </div>
+                <div class="feature-item fade-in-on-scroll">
+                    <ion-icon name="stats-chart-outline"></ion-icon>
+                    <span>Weekly analysis & advice</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Pricing Plans -->
+    <section id="pricing" class="section pricing-section">
+        <div class="container">
+            <h2 class="section-title text-center fade-in-on-scroll">Choose Your Plan</h2>
+
+            <!-- Pricing Category Dropdown -->
+            <div class="pricing-controls text-center fade-in-on-scroll">
+                <select id="pricing-category" class="pricing-select">
+                    <option value="jan">January Attempt</option>
+                    <option value="april-boards" selected>April Attempt + CBSE Boards</option>
+                    <option value="april">April Attempt Only</option>
+                </select>
+            </div>
+
+            <!-- Enrollment Closed Message (Hidden by default, shown for Jan) -->
+            <div id="jan-closed-message" class="enrollment-closed-message" style="display: none;">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                <h3>January Attempt Batch Successfully Concluded</h3>
+                <p>Enrollments for this batch are now closed.</p>
+                <p class="validity-text">Validity: 7th Dec 2025 to 28th Jan 2026</p>
+            </div>
+
+            <div class="pricing-grid stagger-children">
+                <!-- Standard Plan -->
+                <div class="pricing-card fade-in-on-scroll">
+                    <h3 class="plan-name">Standard Plan</h3>
+                    <div class="price" id="std-price">₹699</div>
+                    <p class="plan-validity"
+                        style="font-size: 0.9rem; color: var(--primary-color); margin: 5px 0 15px; font-weight: bold;">
+                        Valid till: JEE
+                        MAINS April attempt 2026</p>
+                    <ul class="plan-features" id="std-features">
+                        <!-- Dynamic Content -->
+                        <li><ion-icon name="checkmark-circle-outline"></ion-icon> Study resources</li>
+                        <li><ion-icon name="checkmark-circle-outline"></ion-icon> Formula sheets</li>
+                        <li><ion-icon name="checkmark-circle-outline"></ion-icon> Basic doubt support</li>
+                        <li><ion-icon name="checkmark-circle-outline"></ion-icon> Weekly strategy updates</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline btn-block">Choose Standard</a>
+                </div>
+
+                <!-- Elite Plan -->
+                <div class="pricing-card elite-card fade-in-on-scroll">
+                    <div class="rocket-trigger" id="mentor-rocket-trigger" title="Meet our Boards Specialist">
+                        <div class="click-me-label">Click Me!</div>
+                        <div class="rocket-icon-wrapper">
+                            <ion-icon name="rocket" class="rocket-icon"></ion-icon>
+                            <div class="rocket-pulse"></div>
+                        </div>
+                        <div class="rocket-tooltip">Meet Board Specialist</div>
+                    </div>
+                    <div class="popular-badge">Most Popular</div>
+                    <h3 class="plan-name">Elite Plan</h3>
+                    <div class="price" id="elite-price">₹999</div>
+                    <p class="plan-validity"
+                        style="font-size: 0.9rem; color: var(--primary-color); margin: 5px 0 15px; font-weight: bold;">
+                        Valid till:
+                        JEE MAINS April attempt 2026</p>
+                    <ul class="plan-features" id="elite-features">
+                        <!-- Dynamic Content -->
+                        <li><ion-icon name="checkmark-circle-outline"></ion-icon> <strong>Everything in
+                                Standard</strong></li>
+                        <li><ion-icon name="checkmark-circle-outline"></ion-icon> Daily personalised doubt solving</li>
+                        <li><ion-icon name="checkmark-circle-outline"></ion-icon> One-to-one mentorship</li>
+                        <li><ion-icon name="checkmark-circle-outline"></ion-icon> Custom study schedule</li>
+                        <li><ion-icon name="checkmark-circle-outline"></ion-icon> Mock-test analysis</li>
+                        <li><ion-icon name="checkmark-circle-outline"></ion-icon> Personal progress tracking</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary btn-block">Choose Elite</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section testimonials-section">
+        <div class="container">
+            <h2 class="section-title text-center fade-in-on-scroll">Student Love</h2>
+            <div class="testimonials-wrapper fade-in-on-scroll">
+                <div class="testimonials-track">
+                    <!-- Original Cards -->
+                    <div class="testimonial-card">
+                        <p class="quote">"It felt like having a big brother guiding me through the toughest phase."</p>
+                        <div class="student-name">- Himanshu</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"The strategy for organic chemistry literally saved my JEE attempt."</p>
+                        <div class="student-name">- Sahil</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"Simple, direct, and no-nonsense advice. Exactly what I needed."</p>
+                        <div class="student-name">- Ashlesha</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"My confidence skyrocketed after just one week of mentorship."</p>
+                        <div class="student-name">- Mukul</div>
+                    </div>
+
+                    <!-- Duplicated Cards for Seamless Loop -->
+                    <div class="testimonial-card">
+                        <p class="quote">"It felt like having a big brother guiding me through the toughest phase."</p>
+                        <div class="student-name">- Himanshu</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"The strategy for organic chemistry literally saved my JEE attempt."</p>
+                        <div class="student-name">- Sahil</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"Simple, direct, and no-nonsense advice. Exactly what I needed."</p>
+                        <div class="student-name">- Ashlesha</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <p class="quote">"My confidence skyrocketed after just one week of mentorship."</p>
+                        <div class="student-name">- Mukul</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="section faq-section">
+        <div class="container">
+            <h2 class="section-title text-center fade-in-on-scroll">Frequently Asked Questions</h2>
+            <!-- Question 1 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>What is JEETO JEE 2.0?</span>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                </button>
+                <div class="faq-answer">
+                    <p>JEETO JEE 2.0 is the upgraded, more impactful version of our mentorship — with improved systems,
+                        refined strategies, and enhanced student support.</p>
+                </div>
+            </div>
+            <!-- Question 2 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>How long is the mentorship?</span>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                </button>
+                <div class="faq-answer">
+                    <p>This mentorship is valid till the April Attempt of Jee Mains 2026.</p>
+                </div>
+            </div>
+            <!-- Question 3 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Who will mentor me?</span>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                </button>
+                <div class="faq-answer">
+                    <p>All guidance is provided directly by Ashir (99.55 %Ile) and Asees (99.71 %Ile) — no third-party
+                        mentors involved.</p>
+                </div>
+            </div>
+            <!-- Question 4 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Are there any resources provided in the program?</span>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes — we give top-notch, handpicked resources used and tested by the mentors themselves.</p>
+                </div>
+            </div>
+            <!-- Question 5 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Will I get personalised schedules?</span>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes, in the Elite plan we analyse your study pattern, weak areas, and mock performance to create
+                        realistic, customised schedules.</p>
+                </div>
+            </div>
+            <!-- Question 6 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span>Are payments refundable?</span>
+                    <ion-icon name="chevron-down-outline"></ion-icon>
+                </button>
+                <div class="faq-answer">
+                    <p>All payments are final and non-refundable as mentorship involves time-based guidance and limited
+                        seats.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="section cta-section">
+        <div class="container text-center">
+            <h2 class="section-title fade-in-on-scroll">Still have questions?</h2>
+            <p class="section-subtitle text-center fade-in-on-scroll">
+                Click the button below to email us directly.
+            </p>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=jeetojeeac@gmail.com" target="_blank"
+                class="btn btn-primary btn-lg fade-in-on-scroll delay-100">
+                <ion-icon name="mail-outline"></ion-icon> Email Us
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+
+
+    <!-- Floating WhatsApp -->
+    <a href="https://whatsapp.com/channel/0029VbBjkwVFHWpvIAWYNA0w" class="floating-whatsapp" target="_blank">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+    </a>
+
+    <!-- Mentor Modal -->
+    <div id="mentor-modal" class="modal-overlay">
+        <div class="modal-content glass-effect">
+            <div class="modal-close">
+                <ion-icon name="close-outline"></ion-icon>
+            </div>
+            <div class="modal-body">
+                <div class="modal-mentor-profile">
+                    <div class="modal-mentor-image">
+                        <img src="board_mentor.jpg" alt="Board Mentor" class="modal-mentor-img">
+                    </div>
+                    <div class="modal-mentor-details">
+                        <h3>Boards Specialist</h3>
+                        <div class="mentor-role">Boards Strategy & Curriculum Expert</div>
+                        <p class="mentor-desc">
+                            Meet Abhishta Gyanda — DTU CSE student and our dedicated Board Mentor. With 98 in English
+                            and 100 in her additional subject, she helps students master easy-to-score areas, refine
+                            writing skills, and build exam-ready confidence.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-content auth-modal-content glass-effect">
+            <div class="modal-close" id="auth-modal-close">
+                <ion-icon name="close-outline"></ion-icon>
+            </div>
+
+            <div class="auth-container">
+                <!-- Login View -->
+                <!-- Login View -->
+                <div id="auth-view-login" class="auth-view active">
+                    <h2 class="auth-title text-center">Welcome</h2>
+                    <p class="auth-subtitle text-center">Sign in to continue your preparation</p>
+
+                    <div class="form-group">
+                        <label class="form-label">Email or Phone</label>
+                        <div class="input-group">
+                            <span class="input-prefix"><ion-icon name="person-outline"></ion-icon></span>
+                            <input type="text" id="login-identifier" placeholder="Enter email or phone">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-prefix"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                            <input type="password" id="login-password" placeholder="Enter password">
+                        </div>
+                    </div>
+
+                    <button id="login-submit-btn" class="auth-btn btn-primary">
+                        <ion-icon name="log-in-outline"></ion-icon> Sign In
+                    </button>
+
+                    <div class="auth-footer text-center mt-3">
+                        Don't have an account? <a href="#" id="switch-to-register">Create Account</a>
+                    </div>
+                </div>
+
+                <!-- Register View -->
+                <div id="auth-view-register" class="auth-view">
+                    <h2 class="auth-title text-center">Create Account</h2>
+                    <p class="auth-subtitle text-center">Join the elite mentorship program</p>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Full Name</label>
+                        <div class="input-group">
+                            <span class="input-prefix"><ion-icon name="person-outline"></ion-icon></span>
+                            <input type="text" id="reg-name" placeholder="Enter full name">
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-prefix"><ion-icon name="mail-outline"></ion-icon></span>
+                            <input type="email" id="reg-email" placeholder="Enter email address">
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <div class="input-group">
+                            <span class="input-prefix"><ion-icon name="call-outline"></ion-icon></span>
+                            <input type="tel" id="reg-phone" placeholder="Enter phone number">
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label class="form-label">Password</label>
+                        <div class="input-group">
+                            <span class="input-prefix"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                            <input type="password" id="reg-password" placeholder="Create password">
+                        </div>
+                    </div>
+
+                    <button id="register-submit-btn" class="auth-btn btn-primary">
+                        <ion-icon name="person-add-outline"></ion-icon> Sign Up
+                    </button>
+
+                    <div class="auth-footer text-center mt-3">
+                        Already have an account? <a href="#" id="switch-to-login">Sign In</a>
+                    </div>
+                </div>
+
+                <!-- Loading View -->
+                <div id="auth-view-loading" class="auth-view text-center">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Verifying credentials...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container container-footer">
+            <div class="footer-links">
+                <a href="/terms">Terms & Conditions</a>
+                <a href="/privacy">Privacy Policy</a>
+                <a href="/refund">Refund Policy</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2026 JEETO JEE. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Jeeto Jee</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+        }
+
+        .admin-header {
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-brand {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+
+        .logout-btn {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        .logout-btn:hover {
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .stat-label {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        /* Table */
+        .data-table-wrapper {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            overflow: hidden;
+            display: none;
+            /* Hidden by default */
+        }
+
+        .data-table-wrapper.active {
+            display: block;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            text-align: left;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .data-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: #888;
+            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            font-size: 0.95rem;
+            color: #ddd;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-paid {
+            background: rgba(217, 249, 106, 0.2);
+            color: #d9f96a;
+        }
+
+        .status-mock {
+            background: rgba(100, 200, 255, 0.2);
+            color: #64c8ff;
+        }
+
+        .status-pending {
+            background: rgba(255, 200, 100, 0.2);
+            color: #ffc864;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Theme -->
+    <div class="space-background">
+        <div class="stars"></div>
+        <div class="planet-1"></div>
+        <div class="planet-2"></div>
+    </div>
+
+    <header class="admin-header" style="position: relative; z-index: 10;">
+        <div class="admin-brand">Jeeto Jee Admin</div>
+        <a href="/admin/logout" class="logout-btn">
+            <ion-icon name="log-out-outline"></ion-icon> Log Out
+        </a>
+    </header>
+
+    <div class="container">
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Users</div>
+                <div class="stat-value">{{ users|length }}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Total Payments</div>
+                <div class="stat-value">{{ orders|length }}</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('users')">Registrations</button>
+            <button class="tab-btn" onclick="switchTab('payments')">Transactions</button>
+        </div>
+
+        <!-- Users Table -->
+        <div id="users-view" class="data-table-wrapper active">
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
+                <button onclick="deleteAllItems('user')"
+                    style="background: rgba(255, 107, 107, 0.1); border: 1px solid #ff6b6b; color: #ff6b6b; padding: 8px 16px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+                    <ion-icon name="trash-bin-outline"></ion-icon> Clear All Users
+                </button>
+            </div>
+            <table class="data-table">
+                <th>ID</th>
+                <th>Order ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>#{{ loop.index }}</td>
+                        <td style="font-family: monospace; color: #fff;">{{ user_orders.get(user.phone, '-') }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>
+                            <button onclick="deleteItem('user', {{ user.id }})"
+                                style="background: none; border: none; color: #ff6b6b; cursor: pointer;">
+                                <ion-icon name="trash-outline" style="font-size: 1.2rem;"></ion-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #666;">No users found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Payments Table -->
+        <div id="payments-view" class="data-table-wrapper">
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 15px;">
+                <button onclick="deleteAllItems('order')"
+                    style="background: rgba(255, 107, 107, 0.1); border: 1px solid #ff6b6b; color: #ff6b6b; padding: 8px 16px; border-radius: 6px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+                    <ion-icon name="trash-bin-outline"></ion-icon> Clear All Transactions
+                </button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Order ID</th>
+                        <th>Student</th>
+                        <th>Plan</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Ref ID</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td style="white-space: nowrap; font-size: 0.85rem; color: #888;">{{
+                            order.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td style="font-family: monospace; color: #fff;">{{ order.custom_id }}</td>
+                        <td>{{ order.student_name }}<br><small style="color:#666">{{ order.student_email }}</small></td>
+                        <td>{{ order.plan_name }} <span style="color:#666; font-size:0.8em">({{ order.plan_category
+                                }})</span></td>
+                        <td>₹{{ order.amount }}</td>
+                        <td>
+                            {% if order.status == 'PAID' %}
+                            <span class="status-badge status-paid">PAID</span>
+                            {% elif order.status == 'MOCK_PAID' %}
+                            <span class="status-badge status-mock">MOCK</span>
+                            {% else %}
+                            <span class="status-badge status-pending">{{ order.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td style="font-family: monospace; font-size: 0.85rem; color: #888;">{{
+                            order.razorpay_payment_id }}</td>
+                        <td>
+                            <button onclick="deleteItem('order', {{ order.id }})"
+                                style="background: none; border: none; color: #ff6b6b; cursor: pointer;">
+                                <ion-icon name="trash-outline" style="font-size: 1.2rem;"></ion-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8" style="text-align: center; color: #666;">No transactions found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.data-table-wrapper').forEach(view => view.classList.remove('active'));
+            document.getElementById(tabName + '-view').classList.add('active');
+        }
+
+        async function deleteItem(type, id) {
+            if (!confirm('Are you sure you want to delete this item? This cannot be undone.')) return;
+
+            try {
+                const response = await fetch(`/admin/delete/${type}/${id}`, { method: 'POST' });
+                const result = await response.json();
+
+                if (result.success) {
+                    location.reload();
+                } else {
+                    alert('Error deleting item: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Network error while deleting.');
+            }
+        }
+
+        async function deleteAllItems(type) {
+            const confirmMsg = type === 'user'
+                ? 'Are you sure you want to delete ALL users? This action is irreversible!'
+                : 'Are you sure you want to delete ALL transactions? This action is irreversible!';
+
+            if (!confirm(confirmMsg)) return;
+            if (!confirm('Doubly sure? This will wipe the entire table.')) return;
+
+            try {
+                const response = await fetch(`/admin/delete-all/${type}`, { method: 'POST' });
+                const result = await response.json();
+
+                if (result.success) {
+                    location.reload();
+                } else {
+                    alert('Error deleting all items: ' + (result.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Network error while performing bulk delete.');
+            }
+        }
+    </script>
+</body>
+
+</html>

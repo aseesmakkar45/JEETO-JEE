@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Plan | JEETO JEE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        body {
+            min-height: 100vh;
+        }
+
+        .plans-container {
+            padding: 120px 20px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            color: #aaa;
+        }
+
+        /* Pricing Grid Horizontal Scroll */
+        .pricing-grid {
+            display: flex;
+            overflow-x: auto;
+            gap: 30px;
+            padding-bottom: 30px;
+            /* Space for scrollbar */
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            /* Firefox */
+        }
+
+        /* Custom Scrollbar Styling */
+        .pricing-grid::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .pricing-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .pricing-grid::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+            min-width: 300px;
+            /* Ensure cards don't shrink */
+            scroll-snap-align: center;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .pricing-card.active-plan {
+            border: 2px solid var(--primary-color);
+            background: rgba(217, 249, 106, 0.05);
+            box-shadow: 0 0 30px rgba(217, 249, 106, 0.1);
+        }
+
+        .active-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(217, 249, 106, 0.4);
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .features-wrapper {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 5px;
+            /* Avoiding scrollbar overlap */
+            /* Custom Scrollbar for inner list */
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) rgba(255, 255, 255, 0.05);
+        }
+
+        .features-wrapper::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .features-wrapper::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .features-wrapper::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            /* Margin handled by wrapper */
+            text-align: left;
+        }
+
+        .plan-features li {
+            margin-bottom: 8px;
+            color: #ccc;
+            display: flex;
+            align-items: flex-start;
+            /* Align top for long text */
+            gap: 10px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .plan-features li.feature-heading {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+            display: block;
+            /* Not flex */
+        }
+
+        .plan-features ion-icon {
+            color: var(--primary-color);
+            min-width: 16px;
+            /* Prevent shrink */
+            margin-top: 3px;
+        }
+
+        .disabled-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #666;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+    <div class="space-background">
+        <div class="stars"></div>
+        <div class="planet-1"></div>
+        <div class="planet-2"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="/" class="logo">JEETO JEE</a>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <a href="/" class="btn btn-outline"
+                    style="padding: 6px 16px; font-size: 0.9rem; border-color: rgba(255,255,255,0.3); color: #fff;">Return
+                    Home</a>
+
+                <a href="/profile"
+                    style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; background: rgba(255,255,255,0.05); padding: 5px 15px 5px 5px; border-radius: 30px; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);">
+                    <div class="profile-avatar"
+                        style="width: 32px; height: 32px; background: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold;">
+                        {{ user.name[0] }}
+                    </div>
+                    <span style="font-weight: 500; font-size: 0.9rem;">My Profile</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="plans-container">
+        <div class="page-header">
+            <h1 class="page-title">My Subscription Plan</h1>
+            {% if active_plan %}
+            <p class="page-subtitle">You are currently subscribed to <strong style="color: #fff;">{{ active_plan.name
+                    }}</strong></p>
+            <div style="margin-top: 10px; font-family: monospace; color: var(--primary-color);">Order ID: {{
+                active_plan.custom_id }}</div>
+            {% else %}
+            <p class="page-subtitle">You don't have an active subscription. Choose one below!</p>
+            {% endif %}
+        </div>
+
+        <div class="pricing-grid">
+            {% set is_april_std = active_plan and 'April' in active_plan.name and 'Standard' in active_plan.name and
+            'Boards' not in active_plan.name %}
+            {% set is_april_elite = active_plan and 'April' in active_plan.name and 'Elite' in active_plan.name and
+            'Boards' not in active_plan.name %}
+            {% set is_boards_std = active_plan and 'Boards' in active_plan.name and 'Standard' in active_plan.name %}
+            {% set is_boards_elite = active_plan and 'Boards' in active_plan.name and 'Elite' in active_plan.name %}
+            {% set no_plan = not active_plan %}
+
+            <!-- 1. April Attempt - Standard -->
+            {% if no_plan or is_april_std %}
+            <div class="pricing-card {% if is_april_std %}active-plan{% endif %}">
+                {% if is_april_std %}<div class="active-badge">CURRENT PLAN</div>{% endif %}
+                <h3 class="plan-name">April Attempt <span style="font-size: 0.6em; opacity: 0.7;">Standard</span></h3>
+                <div class="plan-price">₹499</div>
+                <ul class="plan-features">
+                    <li><ion-icon name="checkmark-circle"></ion-icon> April Comeback Strategy</li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> Live Sessions & Weekly Analysis</li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> Best Self-Tested Resources</li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> Daily WhatsApp Query Resolution</li>
+                </ul>
+                {% if is_april_std %}
+                <button class="btn btn-outline btn-block disabled-btn">Active</button>
+                {% else %}
+                <a href="/checkout?plan=standard&category=april" class="btn btn-outline btn-block">{% if no_plan
+                    %}Choose Plan{% else %}Upgrade{% endif %}</a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- 2. April Attempt - Elite -->
+            {% if no_plan or is_april_std or is_april_elite or is_boards_std %}
+            <div class="pricing-card {% if is_april_elite %}active-plan{% endif %}">
+                {% if is_april_elite %}<div class="active-badge">CURRENT PLAN</div>{% endif %}
+                <h3 class="plan-name">April Attempt <span
+                        style="font-size: 0.6em; opacity: 0.7; color: var(--primary-color);">Elite</span></h3>
+                <div class="plan-price">₹699</div>
+                <ul class="plan-features">
+                    <li><ion-icon name="checkmark-circle"></ion-icon> <strong>Everything in Standard</strong></li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> 1:1 Mentorship (Twice/Week)</li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> Personalised Daily Targets</li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> 5 Super Relevant Mock Tests</li>
+                </ul>
+                {% if is_april_elite %}
+                <button class="btn btn-outline btn-block disabled-btn">Active</button>
+                {% else %}
+                <a href="/checkout?plan=elite&category=april" class="btn btn-primary btn-block">{% if no_plan %}Choose
+                    Elite{% else %}Upgrade{% endif %}</a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- 3. April + Boards - Standard -->
+            {% if no_plan or is_april_std or is_april_elite or is_boards_std %}
+            <div class="pricing-card {% if is_boards_std %}active-plan{% endif %}">
+                {% if is_boards_std %}<div class="active-badge">CURRENT PLAN</div>{% endif %}
+                <h3 class="plan-name">April + Boards <span style="font-size: 0.6em; opacity: 0.7;">Standard</span></h3>
+                <div class="plan-price">₹699</div>
+                <ul class="plan-features">
+                    <li><ion-icon name="checkmark-circle"></ion-icon> JEE & Boards Integrated Strategy</li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> High-Weightage & Sure-Shot Chapters</li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> Board Answer Writing & PYQs</li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> Time Management for 3H Papers</li>
+                </ul>
+                {% if is_boards_std %}
+                <button class="btn btn-outline btn-block disabled-btn">Active</button>
+                {% else %}
+                <a href="/checkout?plan=standard&category=april-boards" class="btn btn-outline btn-block">{% if no_plan
+                    %}Choose Plan{% else %}Upgrade{% endif %}</a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- 4. April + Boards - Elite -->
+            {% if no_plan or is_april_std or is_april_elite or is_boards_std or is_boards_elite %}
+            <div class="pricing-card {% if is_boards_elite %}active-plan{% endif %}">
+                {% if is_boards_elite %}<div class="active-badge">CURRENT PLAN</div>{% endif %}
+                <h3 class="plan-name">April + Boards <span
+                        style="font-size: 0.6em; opacity: 0.7; color: var(--primary-color);">Elite</span></h3>
+                <div class="plan-price">₹999</div>
+                <ul class="plan-features">
+                    <li><ion-icon name="checkmark-circle"></ion-icon> <strong>Everything in Standard</strong></li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> 1:1 Mentorship & Daily Targets</li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> English Revision Lectures</li>
+                    <li><ion-icon name="checkmark-circle"></ion-icon> Sample Papers & Formula Sheets</li>
+                </ul>
+                {% if is_boards_elite %}
+                <button class="btn btn-outline btn-block disabled-btn">Active</button>
+                {% else %}
+                <a href="/checkout?plan=elite&category=april-boards" class="btn btn-primary btn-block">{% if no_plan
+                    %}Choose Elite{% else %}Upgrade{% endif %}</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

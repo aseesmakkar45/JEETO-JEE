@@ -1,0 +1,9 @@
+Flask
+razorpay
+Flask-SQLAlchemy
+Flask-Login
+python-dotenv
+gunicorn
+werkzeug
+psycopg2-binary
+cloudinary

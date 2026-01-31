@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*$py.class
+instance/
+.env
+.DS_Store
+jeeto_jee.db
+debug.log
+checkout_error.txt
+jeeto_jee_code.zip
