@@ -286,15 +286,7 @@
                 } else {
                     showCouponError('Code valid only for April+Boards Elite Plan.');
                 }
-            } else if (code === 'SPECIAL200') {
-                // Exclusive Coupon: April Elite Only, 200 off
-                if (category === 'april' && planType === 'elite') {
-                    discount = 200;
-                    appliedCouponCode = code;
-                    showCouponSuccess(discount);
-                } else {
-                    showCouponError('Code valid only for April Elite Plan.');
-                }
+
             } else if (code === '') {
                 showCouponError('Please enter a code.');
             } else {
