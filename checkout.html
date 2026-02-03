@@ -287,6 +287,15 @@
                     showCouponError('Code valid only for April+Boards Elite Plan.');
                 }
 
+            } else if (code === 'EXCLU150') {
+                // Exclusive Coupon: April Elite Only, 150 off
+                if (category === 'april' && planType === 'elite') {
+                    discount = 150;
+                    appliedCouponCode = code;
+                    showCouponSuccess(discount);
+                } else {
+                    showCouponError('Code valid only for April Elite Plan.');
+                }
             } else if (code === '') {
                 showCouponError('Please enter a code.');
             } else {
@@ -447,8 +456,7 @@
                     console.error("Razorpay Error:", response.error);
 
                     const errorMsgEl = document.getElementById('payment-error-msg');
-                    errorMsgEl.textContent = "Payment Failed: " + response.error.description;
-                    errorMsgEl.style.display = 'block';
+                    errorMsgEl.textContent = "Payment Failed: " + response.error.descron;              errorMsgEl.style.display = 'block';
 
                     btn.textContent = 'Pay Now';
                     btn.disabled = false;
