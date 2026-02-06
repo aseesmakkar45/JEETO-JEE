@@ -170,15 +170,31 @@ def checkout():
         db.session.add(payment)
         db.session.commit()
         
-        # Count how many existing orders start with this prefix
-        # We assume the current record (temp_id) does NOT start with the prefix yet
-        series_count = Payment.query.filter(Payment.custom_id.startswith(prefix)).count()
-        next_seq = series_count + 1
-        
-        # Generate Custom ID: Prefix + Sequence (001, 002...)
-        payment.custom_id = f"{prefix}{next_seq:03d}"
-        
-        db.session.commit()
+        # Custom ID Generation with Retry Logic (to prevent IntegrityError)
+        max_retries = 5
+        for attempt in range(max_retries):
+            try:
+                # Count existing orders with this prefix
+                series_count = Payment.query.filter(Payment.custom_id.startswith(prefix)).count()
+                next_seq = series_count + 1
+                
+                # Generate Custom ID
+                new_id = f"{prefix}{next_seq:03d}"
+                
+                # Check for uniqueness BEFORE committing
+                if not Payment.query.filter_by(custom_id=new_id).first():
+                    payment.custom_id = new_id
+                    db.session.commit()
+                    break
+                else:
+                    # If ID exists, increment safely
+                    print(f"Collision detected for {new_id}, trying next...")
+                    continue
+            except Exception as inner_e:
+                db.session.rollback()
+                if attempt == max_retries - 1:
+                    raise inner_e
+                print(f"Retry {attempt+1} due to: {inner_e}")
 
         # Upgrade Logic & Limit Check
         upgrade_price = None
@@ -443,8 +459,32 @@ def verify_payment():
         if not payment and custom_id:
              payment = Payment.query.filter_by(custom_id=custom_id).first()
 
+        # FAIL-SAFE: Create record if missing but user paid
+        if not payment and not razorpay_payment_id.startswith('pay_mock_'):
+            print(f"FAIL-SAFE TRIGGERED: Missing record for {custom_id or 'UNKNOWN'}. Creating one now.")
+            try:
+                # Extract details from request if available
+                student = data.get('student_details', {})
+                plan = data.get('plan_details', {})
+                
+                payment = Payment(
+                    custom_id=custom_id or f"FS_{str(uuid.uuid4())[:8]}",
+                    status='CREATED', # Will be updated to PAID below
+                    student_name=student.get('name'),
+                    student_email=student.get('email'),
+                    student_phone=student.get('phone'),
+                    plan_name=plan.get('name'),
+                    plan_category=plan.get('category'),
+                    amount=plan.get('price', 0)
+                )
+                db.session.add(payment)
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                print(f"Fail-safe record creation failed: {e}")
+
         # Handle Mock or Free Payment
-        if razorpay_payment_id.startswith('pay_mock_') or (payment and payment.razorpay_order_id.startswith('order_free_')):
+        if razorpay_payment_id.startswith('pay_mock_') or (payment and payment.razorpay_order_id and payment.razorpay_order_id.startswith('order_free_')):
             if payment:
                 payment.status = 'PAID' # Mark as truly PAID
                 # User requested NO transaction ID for zero-cost upgrades, so we allow empty string
@@ -629,6 +669,10 @@ def save_order(student, plan, transaction_id, status='PAID', amount=0):
         if not file_exists:
             writer.writerow(['Timestamp', 'Name', 'Email', 'Phone', 'Plan Name', 'Category', 'Amount', 'Status', 'Transaction/Order ID'])
         writer.writerow(row)
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db.session.remove()
 
 if __name__ == '__main__':
     print("Starting Flask server on http://localhost:8000")

@@ -6,8 +6,8 @@ with app.app_context():
     for u in users:
         print(f"ID: {u.id}, Name: {u.name}, Email: {u.email}")
 
-    print("\n--- PAYMENTS (PAID/MOCK_PAID) ---")
-    payments = Payment.query.filter(Payment.status.in_(['PAID', 'MOCK_PAID'])).all()
+    print("\n--- ALL PAYMENTS ---")
+    payments = Payment.query.order_by(Payment.id.desc()).all()
     if not payments:
         print("No PAID payments found.")
     for p in payments:
