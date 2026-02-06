@@ -561,14 +561,25 @@ def admin_dashboard():
         Payment.razorpay_payment_id != ''
     ).order_by(Payment.id.desc()).all()
     
-    # Map User Phone -> Latest Order ID for display in Users table
+    # Map User Phone/Email -> Latest Order ID for display in Users table
     user_latest_order = {}
+    
+    # Helper to normalize strings for comparison (lowercase & strip)
+    def normalize(val):
+        return str(val).strip().lower() if val else None
+
     for order in orders:
-        # Link by Phone Number
-        if order.student_phone and order.student_phone not in user_latest_order:
-            user_latest_order[order.student_phone] = order.custom_id
+        # Link by Normalized Phone Number
+        norm_phone = normalize(order.student_phone)
+        if norm_phone and norm_phone not in user_latest_order:
+            user_latest_order[norm_phone] = order.custom_id
             
-    return render_template('templates/admin_dashboard.html', users=users, orders=orders, user_orders=user_latest_order)
+        # Link by Normalized Email (Fallback)
+        norm_email = normalize(order.student_email)
+        if norm_email and norm_email not in user_latest_order:
+            user_latest_order[norm_email] = order.custom_id
+            
+    return render_template('templates/admin_dashboard.html', users=users, orders=orders, user_orders=user_latest_order, normalize=normalize)
 
 @app.route('/profile')
 @login_required

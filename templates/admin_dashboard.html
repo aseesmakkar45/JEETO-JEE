@@ -234,7 +234,8 @@
                     {% for user in users %}
                     <tr>
                         <td>#{{ loop.index }}</td>
-                        <td style="font-family: monospace; color: #fff;">{{ user_orders.get(user.phone, '-') }}</td>
+                        <td style="font-family: monospace; color: #fff;">{{ user_orders.get(normalize(user.phone)) or
+                            user_orders.get(normalize(user.email)) or '-' }}</td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.email }}</td>
                         <td>{{ user.phone }}</td>
